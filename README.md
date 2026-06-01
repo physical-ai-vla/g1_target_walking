@@ -4,33 +4,35 @@
 Unitree G1 휴머노이드가 MuJoCo 물리 시뮬레이션 안에서 **하체 관절 목표를 직접 출력**하며
 대상 객체까지 걸어간다. 테스트 시 키네마틱 모션 없음 — 오직 물리로만 움직인다.
 
-> Ludo Robotics 과제 전형 · Isaac GR00T **N1.6** 파라미터만 재사용, 그 외 사전학습 체크포인트 없음.
+> 체화형 AI(embodied AI)의 "인지 + 이동" 분리를 실험한 개인 프로젝트. Isaac GR00T **N1.6**
+> 비전 인코더만 재사용하고, 그 외 사전학습 체크포인트는 쓰지 않았다.
 
 ---
 
 ## 🎬 결과 영상 (지시문 → 인지 → 보행 → 도달)
 
-각 영상은 **전체 파이프라인을 끝까지 실행**한 것이다: GR00T N1.6 Eagle 인지가 지시문의 대상을
+각 GIF는 **전체 파이프라인을 끝까지 실행**한 것이다: GR00T N1.6 Eagle 인지가 지시문의 대상을
 zero-shot으로 특정 → Navigator → 학습된 PPO 보행 정책 → MuJoCo 물리. **왼쪽 = 3인칭, 오른쪽 =
 에고(로봇 시점)**. 시작 2초 정지 → 보행 → 도달 후 2초 정지. 3개 씬 모두 **직립 유지·도달 성공**.
 
-| 지시문 | 결과 | 영상 |
-|---|:---:|---|
-| **"go to the orange cylinder"** | ✅ 도달 (0.39 m) | [▶ seed0](https://github.com/physical-ai-vla/g1_target_walking/raw/main/videos/seed0_go-to-the-orange-cylinder.mp4) |
-| **"go to the red cube"** | ✅ 도달 (0.41 m) | [▶ seed1](https://github.com/physical-ai-vla/g1_target_walking/raw/main/videos/seed1_go-to-the-red-cube.mp4) |
-| **"go to the purple cylinder"** | ✅ 도달 (0.54 m) | [▶ seed2](https://github.com/physical-ai-vla/g1_target_walking/raw/main/videos/seed2_go-to-the-purple-cylinder.mp4) |
+### "go to the orange cylinder" → ✅ 도달 (0.39 m)
+![go to the orange cylinder](videos/seed0_go-to-the-orange-cylinder.gif)
 
-<video src="https://github.com/physical-ai-vla/g1_target_walking/raw/main/videos/seed0_go-to-the-orange-cylinder.mp4" controls muted width="100%"></video>
+### "go to the red cube" → ✅ 도달 (0.41 m)
+![go to the red cube](videos/seed1_go-to-the-red-cube.gif)
 
-> 영상이 위에서 바로 재생되지 않으면 표의 ▶ 링크를 클릭하세요. 각 영상은 파일명에 지시문이
-> 담겨 있고, 매칭되는 `*.cognition.json`(N1.6 grounding 결과) + `*.ego.png`(시작 프레임)와 함께
-> `videos/`에 들어 있다 ([videos/VIDEOS.md](videos/VIDEOS.md)).
+### "go to the purple cylinder" → ✅ 도달 (0.54 m)
+![go to the purple cylinder](videos/seed2_go-to-the-purple-cylinder.gif)
+
+> 각 영상은 파일명에 지시문이 담겨 있고, 매칭되는 `*.cognition.json`(N1.6 grounding 결과) +
+> `*.ego.png`(시작 프레임), 원본 `.mp4`와 함께 `videos/`에 들어 있다
+> ([videos/VIDEOS.md](videos/VIDEOS.md)).
 
 ---
 
 ## 💡 우리는 왜 이렇게 만들었나 (설계 철학)
 
-과제는 "작은 VLA를 학습하라"고 한다. 우리는 그것을 **단일 픽셀→관절 네트워크를 파인튜닝하는
+목표는 "작은 VLA"로 이 문제를 푸는 것이었다. 다만 그것을 **단일 픽셀→관절 네트워크를 파인튜닝하는
 대신, 동결된 VLM 인지 단계(GR00T N1.6 Eagle, zero-shot) + 별도로 학습한 RL 보행 체크포인트의
 결합**으로 구현했다. 다섯 가지 이유:
 
@@ -141,7 +143,7 @@ videos/      3편 (ego ∥ 3인칭, 파일명에 지시문) + cognition.json + e
 report.pdf / report_ko.pdf   전체 보고서 (영문/한글)
 ```
 
-## ✅ 과제 제약 준수
+## ✅ 설계 원칙
 
 - **MuJoCo only** (MJX 학습, MuJoCo-C 일부 렌더). Isaac/Gazebo/Bullet 없음.
 - **사전학습:** GR00T **N1.6 Eagle** 비전 인코더만 재사용; PPO 정책은 scratch부터 학습.

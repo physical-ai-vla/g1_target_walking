@@ -1,6 +1,6 @@
 # G1Nav — Language-Conditioned Lower-Body Navigation for the Unitree G1 in MuJoCo
 
-**Take-home submission.** Maps RGB-D frames + proprioceptive sensors + their histories +
+**Project overview.** Maps RGB-D frames + proprioceptive sensors + their histories +
 a fixed English instruction → Unitree G1 **lower-body joint-position targets**, running in
 real time in MuJoCo (MJX) on a single consumer GPU. No kinematic motion at test time
 (physics only). May reuse Isaac GR00T N1.6 parameters; no other pretrained checkpoints.
@@ -21,7 +21,7 @@ We split the problem along the boundary that physical-AI practice is converging 
 - **Control (how to move)** — a **velocity-conditioned PPO walking policy** (the "spine"),
   trained once in MuJoCo Playground's `G1JoystickFlatTerrain` (MJX) and reused across every
   instruction. Its action **is** a lower-body PD joint-position target — exactly the output
-  the task requires.
+  this problem requires.
 - A thin **Navigator** converts the localized target world coordinate → a velocity command
   `(vx, vy, ωz)` that drives the walking policy each control step.
 
@@ -67,15 +67,15 @@ a hand-built observation makes the policy fall even though it walks in-env.
 
 ### Action (29-D lower-body joint targets)
 `motor_target = default_pose + action · action_scale (0.5)`. The env applies these as PD
-position targets — i.e. the network output is literally the joint-target vector the task asks
-for, never a velocity or a high-level handle.
+position targets — i.e. the network output is literally the joint-target vector the problem
+asks for, never a velocity or a high-level handle.
 
 ---
 
 ## 2.4 Why VLM (zero-shot) + an RL checkpoint — and not an end-to-end trained VLA
 
-The task says "train a small VLA." We deliberately implement that VLA as a **frozen VLM
-cognition stage (GR00T N1.6 Eagle, zero-shot) coupled to a separately-trained RL locomotion
+The goal was to solve this with a "small VLA." We deliberately implement that VLA as a **frozen
+VLM cognition stage (GR00T N1.6 Eagle, zero-shot) coupled to a separately-trained RL locomotion
 checkpoint**, rather than fine-tuning one monolithic pixels→joints network. Five reasons:
 
 1. **We followed a neuroscience-inspired pattern.** Biological motor control is layered:
@@ -113,9 +113,9 @@ checkpoint**, rather than fine-tuning one monolithic pixels→joints network. Fi
 
 ## 2.5 Data — there is no collected dataset, by design
 
-The task asks *"how you generated trajectories and instructions, and roughly how many."*
-We collected **zero trajectories** and trained on **no dataset** — nothing in the pipeline
-is data-driven:
+On the natural question of *"how were the trajectories and instructions generated, and roughly
+how many?"* — we collected **zero trajectories** and trained on **no dataset**; nothing in the
+pipeline is data-driven:
 
 - **Cognition** uses the GR00T N1.6 Eagle encoder **zero-shot** — no training, no data.
 - **Control** is trained by **on-policy RL (PPO) inside MJX**; the only "data" is the
@@ -292,9 +292,9 @@ generator so the exact scenes can be reproduced without shipping large assets.
 
 ---
 
-## 7. Deliverables
+## 7. What's in the repo
 
-- `report.pdf` (this document) · `README.md`
+- `report.pdf` (this document) · `report_ko.pdf` (Korean) · `README.md` · `INSTALL.md`
 - `code/` — teacher (training, eval), student (cognition, Navigator, integration), envs (scene gen)
 - `checkpoint/` — `walk_t4_latest.pkl` (final 154.8 M-step policy) + numbered `walk_t4_step*.pkl` for the sweep
 - `dataset/` — seeded scene/instruction generator (regenerates exact scenes)

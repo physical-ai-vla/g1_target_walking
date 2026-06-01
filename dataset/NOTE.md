@@ -13,9 +13,9 @@ trained on a dataset:
   is no offline/behavior-cloning dataset; the "data" exists only transiently
   inside the RL rollout buffers during training and is never stored.
 
-So the take-home's *"training data, or a manifest + script that regenerates it
-deterministically"* has no training-data branch for us — there is nothing to
-regenerate as data. **The substance of the work is evaluation, not data.**
+So *"training data, or a manifest + script that regenerates it deterministically"*
+has no training-data branch here — there is nothing to regenerate as data.
+**The substance of the work is evaluation, not data.**
 
 ## What *is* deterministic and regenerable: the evaluation suite
 
