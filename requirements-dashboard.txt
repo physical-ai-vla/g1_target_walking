@@ -1,0 +1,11 @@
+# G1Nav — dashboard-only requirements (laptop / no GPU).
+# Enough to run the Streamlit dashboards:
+#   - app_results.py     (8501) replay recorded results
+#   - app_interactive.py (8502) drive the pipeline on a remote GPU pod over SSH
+# The heavy sim/RL/VLM stack is NOT needed here (it runs on the pod).
+streamlit>=1.30
+pandas>=2.0
+imageio>=2.31
+imageio-ffmpeg>=0.4
+pillow>=10.0
+numpy>=1.24

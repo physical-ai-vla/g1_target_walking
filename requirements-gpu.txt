@@ -1,0 +1,28 @@
+# G1Nav — full GPU requirements (Ada-generation NVIDIA GPU).
+# Runs EVERYTHING locally: PPO training, MJX rollout, the N1.6 Eagle cognition,
+# the closed-loop navigation, and the interactive dashboard in LOCAL mode.
+#
+# Pinned stack that is verified to work end-to-end (see report.md §6):
+#   developed on RTX 6000 Ada (48 GB), CUDA 12.x, Python 3.10–3.12.
+#   Avoid Ampere (cuSolver bug on jax 0.5.3) and Blackwell/sm_120 (no kernels).
+#
+# Install jax with the CUDA12 extra:  pip install "jax[cuda12]==0.5.3"
+jax[cuda12]==0.5.3
+brax==0.14.2
+flax==0.10.6
+optax
+distrax
+mujoco==3.4.0
+mujoco-mjx==3.4.0
+playground==0.1.0            # mujoco_playground
+# cognition: GR00T N1.6 Eagle vision encoder (transformers must be this version)
+torch>=2.4
+transformers==4.51.3
+accelerate
+# dashboards + io
+streamlit>=1.30
+pandas>=2.0
+imageio>=2.31
+imageio-ffmpeg>=0.4
+pillow>=10.0
+numpy>=1.24

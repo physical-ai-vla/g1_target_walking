@@ -1,0 +1,18 @@
+{
+  "stages": {
+    "1": "GR00T N1.6 Eagle vision encoder (SigLip2) perceived the ego frame: 286 patch tokens x 2048-d (\u2016emb\u2016=802). Candidate objects: red cube, purple cube, yellow cone",
+    "2": "target = red cube   (instruction grounded to a scene object by color+shape)",
+    "3": "localize: object bearing + distance via color/shape CV + ego-depth (downstream)",
+    "4": "plan: head toward the grounded target",
+    "5": "motor intent: forward / turn -> velocity command (Navigator)"
+  },
+  "vlm_target": "red cube",
+  "eagle_patches": 286,
+  "eagle_embed_dim": 2048,
+  "eagle_norm": 802.354248046875,
+  "labels": [
+    "red cube",
+    "purple cube",
+    "yellow cone"
+  ]
+}

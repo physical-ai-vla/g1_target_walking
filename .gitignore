@@ -1,0 +1,9 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+outputs/
+# os
+.DS_Store
+# local runtime artifacts
+/tmp/
